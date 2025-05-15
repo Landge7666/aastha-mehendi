@@ -141,6 +141,61 @@
       }
     }
 
+    <script>
+  let galleryCategories = {
+    Traditional: [],
+    Bridal: [],
+    Modern: [],
+    Festive: []
+  };
+
+  let gallery2Images = [];
+  let currentZoom = 1;
+  let isAdmin = false;
+
+  function loginAdmin() {
+    const user = document.getElementById("adminUser").value;
+    const pass = document.getElementById("adminPass").value;
+    if (user === "admin" && pass === "admin123") {
+      document.getElementById("adminSection").style.display = "block";
+      isAdmin = true;
+      showCategory("Traditional");
+      renderGallery2();
+
+      // Font आणि Size restore करतो
+      applySavedTitleFont();
+    } else {
+      alert("Incorrect login");
+    }
+  }
+
+  function applySavedTitleFont() {
+    const savedFont = localStorage.getItem("titleFont");
+    const savedSize = localStorage.getItem("titleFontSize");
+    const title = document.querySelector("header h1");
+
+    if (savedFont && savedSize) {
+      title.style.fontFamily = savedFont;
+      title.style.fontSize = savedSize + "px";
+
+      document.getElementById("fontSelector").value = savedFont;
+      document.getElementById("fontSizeRange").value = savedSize;
+    }
+  }
+
+  function updateTitleFont() {
+    const font = document.getElementById("fontSelector").value;
+    const size = document.getElementById("fontSizeRange").value;
+    const title = document.querySelector("header h1");
+
+    title.style.fontFamily = font;
+    title.style.fontSize = size + "px";
+
+      }
+  }
+    localStorage.setItem("titleFont", font);
+    localStorage.setItem("titleFontSize", size);
+  
     function applySavedTitleFont() {
       const font = localStorage.getItem("titleFont");
       const size = localStorage.getItem("titleFontSize");
