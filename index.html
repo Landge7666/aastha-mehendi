@@ -1,238 +1,326 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aastha Mehendi Miracles</title>
-  <style>
-    :root {
-      --themeColor: #8b0000;
-      --titleColor: white;
-    }
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-      transition: background 0.5s, color 0.5s;
-    }
-    header, footer {
-      background-color: var(--themeColor);
-      color: white;
-      padding: 1em;
-      text-align: center;
-    }
-    nav {
-      background-color: #ffa07a;
-      padding: 1em;
-      display: flex;
-      justify-content: center;
-      gap: 1em;
-      flex-wrap: wrap;
-    }
-    nav a {
-      text-decoration: none;
-      color: black;
-      font-weight: bold;
-    }
-    section { padding: 2em; }
-    .admin-section { display: none; background: #f5f5f5; padding: 2em; margin-top: 2em; border: 2px dashed #999; }
-    .theme-select {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: white;
-      border: 1px solid gray;
-      padding: 10px;
-      z-index: 1000;
-    }
-    .review { background: #fff0f5; margin: 1em 0; padding: 1em; border-radius: 10px; }
-  </style>
-</head>
-<body>
-  <header>
-    <h1 style="color: var(--titleColor)">Aastha Mehendi Miracles</h1>
-    <p>Traditional | Bridal | Modern | Festive Designs</p>
-  </header>
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+  <title>Aastha Mehendi Miracles</title>  
+  <link rel="stylesheet" href="style.css">  
+  <style>  
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; transition: background 0.5s, color 0.5s; }  
+    header, footer { background-color: var(--themeColor, #8b0000); color: white; padding: 1em; text-align: center; }  
+    nav { background-color: #ffa07a; padding: 1em; display: flex; justify-content: center; gap: 1em; flex-wrap: wrap; }  
+    nav a { text-decoration: none; color: black; font-weight: bold; }  
+    section { padding: 2em; }  
+    .form-group { margin-bottom: 1em; }  
+    input, textarea, select { width: 100%; padding: 0.5em; }  
+    .admin-section { display: none; background-color: #f5f5f5; padding: 2em; margin-top: 2em; border: 2px dashed #999; }  
+    .login-form input { width: 200px; margin: 5px; }  
+    button { padding: 0.5em 1em; background-color: var(--themeColor, #8b0000); color: white; border: none; cursor: pointer; margin-top: 5px; }  
+    .review { background-color: #fff0f5; margin: 1em 0; padding: 1em; border-radius: 10px; }  
+    .theme-select { position: fixed; bottom: 20px; right: 20px; background: white; border: 1px solid gray; padding: 10px; }  .category-buttons button { margin: 5px; }  
+.gallery-images img { width: 150px; border-radius: 10px; cursor: pointer; }  
 
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#booking">Book Now</a>
-    <a href="#reviews">Reviews</a>
-    <a href="#contact">Contact</a>
-    <a href="#admin">Admin</a>
-  </nav>
+.gallery2 { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }  
+.gallery2 img { width: 300px; border-radius: 10px; transition: transform 0.3s; cursor: zoom-in; }  
 
-  <section id="home">
-    <h2>Welcome</h2>
-    <p>Discover artistic mehendi for all occasions!</p>
-  </section>
+.zoomed-img {  
+  position: fixed;  
+  top: 50%; left: 50%;  
+  transform: translate(-50%, -50%) scale(1);  
+  max-width: 90%; max-height: 90%;  
+  z-index: 9999;  
+  border: 5px solid #fff;  
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);  
+  display: none;  
+  cursor: zoom-out;  
+  background: white;  
+  border-radius: 10px;  
+  transition: transform 0.3s;  
+}  
 
-  <section id="booking">
-    <h2>Book Appointment</h2>
-    <form onsubmit="saveBooking(event)">
-      <input type="text" id="custName" placeholder="Name" required><br>
-      <input type="tel" id="custPhone" placeholder="Phone" required><br>
-      <input type="date" id="appointmentDate" required><br>
-      <input type="text" id="location" placeholder="Location" required><br>
-      <button type="submit">Submit</button>
-    </form>
-  </section>
+.zoom-controls {  
+  position: fixed;  
+  top: 20px;  
+  right: 20px;  
+  z-index: 10000;  
+  background: white;  
+  padding: 10px;  
+  border: 1px solid #ccc;  
+  display: none;  
+}  
+.zoom-controls button {  
+  margin: 0 5px;  
+  padding: 5px 10px;  
+}  
 
-  <section id="reviews">
-    <h2>Client Reviews</h2>
-    <div class="review"><strong>Priya:</strong> Beautiful mehendi!</div>
-    <div class="review"><strong>Neha:</strong> Amazing designs!</div>
-  </section>
+.footer-social a {  
+  margin: 0 5px;  
+  color: white;  
+  text-decoration: none;  
+}
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <div id="adminContactInfo"></div>
-  </section>
+  </style>  
+</head>  
+<body>  
+  <header>  
+    <h1 style="color: var(--titleColor, white)">Aastha Mehendi Miracles</h1>  
+    <p>Traditional | Bridal | Modern | Festive Designs</p>  
+  </header>    <nav>  
+    <a href="#home">Home</a>  
+    <a href="#gallery">Gallery</a>  
+    <a href="#gallery2">Gallery 2</a>  
+    <a href="#booking">Book Now</a>  
+    <a href="#reviews">Reviews</a>  
+    <a href="#contact">Contact</a>  
+    <a href="#admin">Admin</a>  
+  </nav>    <section id="home">  
+    <h2>Welcome to Aastha Mehendi Miracles</h2>  
+    <p>Discover beautiful, artistic mehendi designs for all occasions!</p>  
+  </section>    <section id="gallery">  
+    <h2>Gallery</h2>  
+    <div class="category-buttons">  
+      <button onclick="showCategory('Traditional')">Traditional</button>  
+      <button onclick="showCategory('Bridal')">Bridal</button>  
+      <button onclick="showCategory('Modern')">Modern</button>  
+      <button onclick="showCategory('Festive')">Festive</button>  
+    </div>  
+    <div id="galleryDisplay" class="gallery-images"></div>  
+  </section>    <section id="gallery2">  
+    <h2>Gallery 2 – Featured Designs</h2>  
+    <div class="gallery2" id="gallery2Container"></div>  
+    <img id="zoomedImage" class="zoomed-img" onclick="toggleZoom()" />  
+    <div class="zoom-controls" id="zoomControls">  
+      <button onclick="zoomIn()">+</button>  
+      <button onclick="zoomOut()">−</button>  
+    </div>  
+  </section>    <section id="booking">  
+    <h2>Book an Appointment</h2>  
+    <form onsubmit="saveBooking(event)">  
+      <div class="form-group"><label>Name:</label><input type="text" id="custName" required></div>  
+      <div class="form-group"><label>Phone:</label><input type="tel" id="custPhone" required></div>  
+      <div class="form-group"><label>Date:</label><input type="date" id="appointmentDate" required></div>  
+      <div class="form-group"><label>Location:</label><input type="text" id="location" required></div>  
+      <button type="submit">Submit</button>  
+    </form>  
+  </section>    <section id="reviews">  
+    <h2>Client Reviews</h2>  
+    <div class="review"><strong>Priya:</strong> "Beautiful bridal mehendi!"</div>  
+    <div class="review"><strong>Neha:</strong> "Amazing and clean designs."</div>  
+  </section>    <section id="contact">  
+    <h2>Contact Details</h2>  
+    <div id="adminContactInfo"></div>  
+  </section>    <section id="admin">  
+    <h2>Admin Login</h2>  
+    <div class="login-form">  
+      <input type="text" id="adminUser" placeholder="Username" />  
+      <input type="password" id="adminPass" placeholder="Password" />  
+      <button onclick="loginAdmin()">Login</button>  
+    </div>  
+    <div class="admin-section" id="adminSection">  
+      <h3>Upload to Categories</h3>  
+      <select id="uploadCategory">  
+        <option value="Traditional">Traditional</option>  
+        <option value="Bridal">Bridal</option>  
+        <option value="Modern">Modern</option>  
+        <option value="Festive">Festive</option>  
+      </select>  
+      <input type="file" onchange="uploadCategoryImage(this)">  <h3>Upload to Gallery 2</h3>  
+  <input type="file" onchange="uploadGallery2Image(this)">  
 
-  <section id="admin">
-    <h2>Admin Login</h2>
-    <input type="text" id="adminUser" placeholder="Username">
-    <input type="password" id="adminPass" placeholder="Password">
-    <button onclick="loginAdmin()">Login</button>
+  <h3>Update Contact & Socials</h3>  
+  <textarea id="contactInput" placeholder="Contact Info (Name, Phone, Email, Address)"></textarea>  
+  <input type="text" id="instagram" placeholder="Instagram Link" />  
+  <input type="text" id="facebook" placeholder="Facebook Link" />  
+  <input type="text" id="whatsapp" placeholder="WhatsApp Link" />  
+  <button onclick="updateContact()">Update Contact</button>  
 
-    <div class="admin-section" id="adminSection">
-      <h3>Customize Title Font</h3>
-      <label>Font:</label>
-      <select id="fontSelector" onchange="updateTitleFont()">
-        <option value="Arial">Arial</option>
-        <option value="Georgia">Georgia</option>
-        <option value="Courier New">Courier New</option>
-        <option value="Times New Roman">Times New Roman</option>
-        <option value="Verdana">Verdana</option>
-      </select><br>
-      <label>Size:</label>
-      <input type="range" min="20" max="100" value="40" id="fontSizeRange" oninput="updateTitleFont()">
-    </div>
-  </section>
+  <h3>Customize Title Font</h3>  
+  <label>Font Family:</label>  
+  <select id="fontSelector" onchange="updateTitleFont()">  
+    <option value="Arial">Arial</option>  
+    <option value="Georgia">Georgia</option>  
+    <option value="Courier New">Courier New</option>  
+    <option value="Times New Roman">Times New Roman</option>  
+    <option value="Verdana">Verdana</option>  
+  </select>  
+  <br>  
+  <label>Font Size:</label>  
+  <input type="range" min="20" max="100" value="40" id="fontSizeRange" oninput="updateTitleFont()">  
+</div>
 
-  <footer>
-    <p>&copy; 2025 Aastha Mehendi Miracles</p>
-  </footer>
-
-  <div class="theme-select">
-    <label>Theme:</label>
-    <select onchange="changeTheme(this.value)">
-      <option value="#8b0000">Red</option>
-      <option value="#2e8b57">Green</option>
-      <option value="#483d8b">Purple</option>
-      <option value="#ff1493">Pink</option>
-    </select><br/>
-    <label>Title Color:</label>
-    <input type="color" onchange="changeTitleColor(this.value)">
-  </div>
-
-  <script>
-    let isAdmin = false;
-
-    function loginAdmin() {
-      const user = document.getElementById("adminUser").value;
-      const pass = document.getElementById("adminPass").value;
-      if (user === "admin" && pass === "admin123") {
-        isAdmin = true;
-        document.getElementById("adminSection").style.display = "block";
-        applySavedTitleFont();
-      } else {
-        alert("Wrong credentials");
-      }
-    }
-
-    <script>
-  let galleryCategories = {
-    Traditional: [],
-    Bridal: [],
-    Modern: [],
-    Festive: []
-  };
-
-  let gallery2Images = [];
-  let currentZoom = 1;
-  let isAdmin = false;
-
-  function loginAdmin() {
-    const user = document.getElementById("adminUser").value;
-    const pass = document.getElementById("adminPass").value;
-    if (user === "admin" && pass === "admin123") {
-      document.getElementById("adminSection").style.display = "block";
-      isAdmin = true;
-      showCategory("Traditional");
-      renderGallery2();
-
-      // Font आणि Size restore करतो
-      applySavedTitleFont();
-    } else {
-      alert("Incorrect login");
-    }
-  }
-
-  function applySavedTitleFont() {
-    const savedFont = localStorage.getItem("titleFont");
-    const savedSize = localStorage.getItem("titleFontSize");
-    const title = document.querySelector("header h1");
-
-    if (savedFont && savedSize) {
-      title.style.fontFamily = savedFont;
-      title.style.fontSize = savedSize + "px";
-
-      document.getElementById("fontSelector").value = savedFont;
-      document.getElementById("fontSizeRange").value = savedSize;
-    }
-  }
-
-  function updateTitleFont() {
-    const font = document.getElementById("fontSelector").value;
-    const size = document.getElementById("fontSizeRange").value;
-    const title = document.querySelector("header h1");
-
-    title.style.fontFamily = font;
-    title.style.fontSize = size + "px";
-
-      }
-  }
-    localStorage.setItem("titleFont", font);
-    localStorage.setItem("titleFontSize", size);
+  </section>    <footer>  
+    <p>&copy; 2025 Aastha Mehendi Miracles. All rights reserved.</p>  
+    <div class="footer-social" id="footerSocialLinks"></div>  
+  </footer>    <div class="theme-select">  
+    <label>Theme:</label>  
+    <select onchange="changeTheme(this.value)">  
+      <option value="#8b0000">Classic Red</option>  
+      <option value="#2e8b57">Green</option>  
+      <option value="#483d8b">Purple</option>  
+      <option value="#ff1493">Pink</option>  
+    </select><br/>  
+    <label>Title Color:</label>  
+    <input type="color" onchange="changeTitleColor(this.value)" />  
+  </div>    <script>  
+    let galleryCategories = {  
+      Traditional: [],  
+      Bridal: [],  
+      Modern: [],  
+      Festive: []  
+    };  
   
-    function applySavedTitleFont() {
-      const font = localStorage.getItem("titleFont");
-      const size = localStorage.getItem("titleFontSize");
-      const title = document.querySelector("header h1");
-
-      if (font && size) {
-        title.style.fontFamily = font;
-        title.style.fontSize = size + "px";
-        document.getElementById("fontSelector").value = font;
-        document.getElementById("fontSizeRange").value = size;
-      }
-    }
-
-    function updateTitleFont() {
-      const font = document.getElementById("fontSelector").value;
-      const size = document.getElementById("fontSizeRange").value;
-      const title = document.querySelector("header h1");
-
-      title.style.fontFamily = font;
-      title.style.fontSize = size + "px";
-
-      localStorage.setItem("titleFont", font);
-      localStorage.setItem("titleFontSize", size);
-    }
-
-    function changeTheme(color) {
-      document.documentElement.style.setProperty('--themeColor', color);
-    }
-
-    function changeTitleColor(color) {
-      document.documentElement.style.setProperty('--titleColor', color);
-    }
-
-    function saveBooking(e) {
-      e.preventDefault();
-      alert("Thank you! Your booking is confirmed.");
-    }
-  </script>
-</body>
+    let gallery2Images = [];  
+    let currentZoom = 1;  
+    let isAdmin = false;  
+  
+    function loginAdmin() {  
+      const user = document.getElementById("adminUser").value;  
+      const pass = document.getElementById("adminPass").value;  
+      if (user === "admin" && pass === "admin123") {  
+        document.getElementById("adminSection").style.display = "block";  
+        isAdmin = true;  
+        showCategory("Traditional");  
+        renderGallery2();  
+      } else {  
+        alert("Incorrect login");  
+      }  
+    }  
+  
+    function uploadCategoryImage(input) {  
+      const cat = document.getElementById("uploadCategory").value;  
+      const file = input.files[0];  
+      const reader = new FileReader();  
+      reader.onload = function(e) {  
+        galleryCategories[cat].push(e.target.result);  
+        showCategory(cat);  
+      };  
+      reader.readAsDataURL(file);  
+    }  
+  
+    function uploadGallery2Image(input) {  
+      const file = input.files[0];  
+      const reader = new FileReader();  
+      reader.onload = function(e) {  
+        gallery2Images.push(e.target.result);  
+        renderGallery2();  
+      };  
+      reader.readAsDataURL(file);  
+    }  
+  
+    function showCategory(cat) {  
+      const div = document.getElementById("galleryDisplay");  
+      div.innerHTML = "";  
+      galleryCategories[cat].forEach((src, index) => {  
+        const wrapper = document.createElement("div");  
+        wrapper.style.position = "relative";  
+        const img = document.createElement("img");  
+        img.src = src;  
+        wrapper.appendChild(img);  
+        if (isAdmin) {  
+          const delBtn = document.createElement("button");  
+          delBtn.innerText = "Delete";  
+          delBtn.style.position = "absolute";  
+          delBtn.style.top = "5px";  
+          delBtn.style.right = "5px";  
+          delBtn.onclick = () => deleteCategoryImage(cat, index);  
+          wrapper.appendChild(delBtn);  
+        }  
+        div.appendChild(wrapper);  
+      });  
+    }  
+  
+    function deleteCategoryImage(cat, index) {  
+      galleryCategories[cat].splice(index, 1);  
+      showCategory(cat);  
+    }  
+  
+    function renderGallery2() {  
+      const container = document.getElementById("gallery2Container");  
+      container.innerHTML = "";  
+      gallery2Images.forEach((src, index) => {  
+        const wrapper = document.createElement("div");  
+        wrapper.style.position = "relative";  
+        const img = document.createElement("img");  
+        img.src = src;  
+        img.onclick = () => zoomImage(src);  
+        wrapper.appendChild(img);  
+        if (isAdmin) {  
+          const delBtn = document.createElement("button");  
+          delBtn.innerText = "Delete";  
+          delBtn.style.position = "absolute";  
+          delBtn.style.top = "5px";  
+          delBtn.style.right = "5px";  
+          delBtn.onclick = () => deleteGallery2Image(index);  
+          wrapper.appendChild(delBtn);  
+        }  
+        container.appendChild(wrapper);  
+      });  
+    }  
+  
+    function deleteGallery2Image(index) {  
+      gallery2Images.splice(index, 1);  
+      renderGallery2();  
+    }  
+  
+    function zoomImage(src) {  
+      const zoomed = document.getElementById("zoomedImage");  
+      zoomed.src = src;  
+      zoomed.style.display = "block";  
+      document.getElementById("zoomControls").style.display = "block";  
+      currentZoom = 1;  
+      zoomed.style.transform = `translate(-50%, -50%) scale(${currentZoom})`;  
+    }  
+  
+    function toggleZoom() {  
+      document.getElementById("zoomedImage").style.display = "none";  
+      document.getElementById("zoomControls").style.display = "none";  
+    }  
+  
+    function zoomIn() {  
+      currentZoom = Math.min(currentZoom + 0.1, 2);  
+      document.getElementById("zoomedImage").style.transform = `translate(-50%, -50%) scale(${currentZoom})`;  
+    }  
+  
+    function zoomOut() {  
+      currentZoom = Math.max(currentZoom - 0.1, 0.5);  
+      document.getElementById("zoomedImage").style.transform = `translate(-50%, -50%) scale(${currentZoom})`;  
+    }  
+  
+    function updateContact() {  
+      const text = document.getElementById("contactInput").value;  
+      const ig = document.getElementById("instagram").value;  
+      const fb = document.getElementById("facebook").value;  
+      const wa = document.getElementById("whatsapp").value;  
+  
+      document.getElementById("adminContactInfo").innerHTML = text.replace(/\n/g, "<br>") + `<br>  
+        <strong>Instagram:</strong> <a href="${ig}" target="_blank">${ig}</a><br>  
+        <strong>Facebook:</strong> <a href="${fb}" target="_blank">${fb}</a><br>  
+        <strong>WhatsApp:</strong> <a href="${wa}" target="_blank">${wa}</a>`;  
+  
+      document.getElementById("footerSocialLinks").innerHTML = `  
+        <a href="${ig}" target="_blank">Instagram</a> |  
+        <a href="${fb}" target="_blank">Facebook</a> |  
+        <a href="${wa}" target="_blank">WhatsApp</a>`;  
+    }  
+  
+    function saveBooking(e) {  
+      e.preventDefault();  
+      alert("Thank you! Your booking is confirmed.");  
+    }  
+  
+    function changeTheme(color) {  
+      document.documentElement.style.setProperty('--themeColor', color);  
+    }  
+  
+    function changeTitleColor(color) {  
+      document.documentElement.style.setProperty('--titleColor', color);  
+    }  
+  
+    function updateTitleFont() {  
+      const font = document.getElementById("fontSelector").value;  
+      const size = document.getElementById("fontSizeRange").value;  
+      const title = document.querySelector("header h1");  
+      title.style.fontFamily = font;  
+      title.style.fontSize = size + "px";  
+    }  
+  </script>    <script src="script.js"></script>  </body>  
 </html>
